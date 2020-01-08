@@ -1,0 +1,32 @@
+{
+  "name": "react_native_space_animation",
+  "version": "0.0.1",
+  "private": false,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "logrocket": "^1.0.5",
+    "react": "16.9.0",
+    "react-native": "0.61.4",
+    "react-native-gesture-handler": "1.5.2",
+    "react-native-reanimated": "^1.4.0",
+    "react-native-size-matters": "0.2.1"
+  },
+  "devDependencies": {
+    "@babel/core": "7.5.0",
+    "@babel/runtime": "7.5.0",
+    "@react-native-community/eslint-config": "0.0.3",
+    "babel-jest": "24.1.0",
+    "eslint": "^5.9.0",
+    "jest": "24.1.0",
+    "metro-react-native-babel-preset": "0.51.1",
+    "react-test-renderer": "16.9.0"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
