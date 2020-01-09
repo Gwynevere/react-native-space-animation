@@ -2,6 +2,16 @@
   "name": "react_native_space_animation",
   "version": "0.0.1",
   "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gwynevere/react-native-space-animation.git"
+  },
+  "author": "aemyss",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Gwynevere/react-native-space-animation/issues"
+  },
+  "homepage": "https://github.com/Gwynevere/react-native-space-animation#readme",
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
