@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, View } from 'react-native';
 import ThrustVector from './thrust_vector';
-import { NUMBER_OF_VECTORS, random, sum, VECTOR_SIZE_RANGE, VECTORS_FREE_SPACE_AROUND } from '../../Utils';
+import { NUMBER_OF_VECTORS, random, VECTOR_SIZE_RANGE, VECTORS_FREE_SPACE_AROUND } from '../../Utils';
 
 export default class Thrust extends PureComponent {
 

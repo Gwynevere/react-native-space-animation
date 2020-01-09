@@ -81,7 +81,7 @@ export default class Thrust extends PureComponent {
 
 const styles = StyleSheet.create({
   thrustVector: {
-    backgroundColor: '#82ADA9',
+    backgroundColor: 'rgb(231,72,86,255)',
   },
 
 });

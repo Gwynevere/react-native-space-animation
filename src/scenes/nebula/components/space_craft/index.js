@@ -25,7 +25,7 @@ export default class SpaceCraft extends PureComponent {
     return <View style={styles.main}>
       <Image source={Images.spaceCraft} style={[styles.ship, position]}/>
       <Thrust clock={this.props.clock}
-              x={this.coordinates.x}
+              x={this.coordinates.x - 8}
               y={this.coordinates.y - (image_size / 2) * 1.8}/>
     </View>;
   }
