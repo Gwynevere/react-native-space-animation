@@ -6,6 +6,21 @@ from copy import deepcopy
 from os import listdir
 from os.path import isfile, join
 
+
+class cd:
+    """Context manager for changing the current working directory"""
+
+    def __init__(self, newPath):
+        self.newPath = os.path.expanduser(newPath)
+
+    def __enter__(self):
+        self.savedPath = os.getcwd()
+        os.chdir(self.newPath)
+
+    def __exit__(self, etype, value, traceback):
+        os.chdir(self.savedPath)
+
+
 ## SCRIPT CONSTANTS
 
 DEFAULT_APK_SRC_DIR = './android/app/build/outputs/apk/release/app-release.apk'
@@ -264,7 +279,7 @@ def install_apk(apk):
 
 def run_full_process():
     clean_build_folder()
-    build_apk()
+    build_apk(False)
     install_apk(DEFAULT_APK_SRC_DIR)
 
 
@@ -272,15 +287,20 @@ def run_full_process():
 
 init_script_variables(args['target'], args['v'])
 set_environment_file(args['env'])
-
+print()
+print(os.getcwd() + "\\android")
+print()
 if args['install']:
-    run_full_process()
+    with cd(os.getcwd() + "\\android"):
+        run_full_process()
 else:
-    if args['clean']:
-        clean_build_folder()
-    if args['x'] & args['build']:
-        build_apk(True)
-    elif args['build']:
-        build_apk(False)
+    with cd(os.getcwd() + "\\android"):
+        if args['clean']:
+            clean_build_folder()
+        if args['x'] & args['build']:
+            build_apk(True)
+        elif args['build']:
+            build_apk(False)
+
     if args['launch']:
         launch_rr()
