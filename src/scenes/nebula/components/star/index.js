@@ -70,6 +70,7 @@ export default class Star extends PureComponent {
       state.position,
     ]);
   }
+
   runSizeTime = (clock) => {
     const state = {
       finished: new Value(0),

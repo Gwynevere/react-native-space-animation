@@ -53,7 +53,7 @@ export default class Nebula extends PureComponent {
   }
 
   cluster = () => {
-    const length = random(100, 120);
+    const length = random(120, 160);
     const starsCoordinates = [];
 
     for (let i = 0; i < length; i++) {

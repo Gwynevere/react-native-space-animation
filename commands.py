@@ -23,7 +23,7 @@ class cd:
 
 ## SCRIPT CONSTANTS
 
-DEFAULT_APK_SRC_DIR = './android/app/build/outputs/apk/release/app-release.apk'
+DEFAULT_APK_SRC_DIR = 'android/app/build/outputs/apk/release/app-release.apk'
 DEFAULT_APK_DST_DIR = '/storage/self/primary/'
 
 DEFAULT_DEVICE = "-d"
@@ -277,9 +277,9 @@ def install_apk(apk):
     )
 
 
-def run_full_process():
+def run_full_process(exclude):
     clean_build_folder()
-    build_apk(False)
+    build_apk(exclude)
     install_apk(DEFAULT_APK_SRC_DIR)
 
 
@@ -292,7 +292,7 @@ print(os.getcwd() + "\\android")
 print()
 if args['install']:
     with cd(os.getcwd() + "\\android"):
-        run_full_process()
+        run_full_process(args['x'])
 else:
     with cd(os.getcwd() + "\\android"):
         if args['clean']:
