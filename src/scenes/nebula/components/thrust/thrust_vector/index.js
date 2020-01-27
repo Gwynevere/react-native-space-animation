@@ -3,12 +3,35 @@ import { StyleSheet, View } from 'react-native';
 import Animated, { Easing } from 'react-native-reanimated';
 import { random, THRUST_LINE, ANGLE_OF_THRUST } from '../../../Utils';
 
-const { cond, call, timing, Clock, Extrapolate, set, block, stopClock, Value, interpolate, eq, or, startClock, clockRunning, debug } = Animated;
+const { cond, timing, set, block, Value, eq } = Animated;
 
 export default class Thrust extends PureComponent {
-  duration = random(50, 100, false)
-  line_color = THRUST_LINE.colors[random(0, 11).toString()]
-  circle_color = THRUST_LINE.colors[random(0, 11).toString()]
+  duration = random(100, 140)
+
+  extractColor = () => {
+    let circle_color = '';
+    let loop = true;
+    let breaker = 0;
+
+    while (loop) {
+      let num = random(0, 6).toString();
+
+      circle_color = THRUST_LINE.colors[num];
+
+      if (breaker > 9) {
+        circle_color = THRUST_LINE.colors[num];
+      }
+
+      if (!circle_color[1]) {
+        THRUST_LINE.colors[num][1] = true;
+        loop = false;
+        break;
+      }
+      breaker += 1;
+    }
+
+    return circle_color[0];
+  }
 
   runThrustLineXTime = (clock, x) => {
     x = x + this.props.initialLength;
@@ -125,9 +148,10 @@ export default class Thrust extends PureComponent {
     const y = this.props.y;
     const circle_x = x - THRUST_LINE.radius[0] / 2;
     const circle_y = this.props.y - THRUST_LINE.radius[0] / 2;
+    const color = this.extractColor();
 
     const animatedStyleThrustLine = {
-      backgroundColor: this.circle_color,
+      backgroundColor: color,
       position: 'absolute',
       top: y,
       left: this.runThrustLineXTime(this.props.clock, x),
@@ -136,7 +160,7 @@ export default class Thrust extends PureComponent {
     };
 
     const animatedStyleCircle = {
-      backgroundColor: this.circle_color,
+      backgroundColor: color,
       position: 'absolute',
       top: circle_y,
       left: this.runThrustLineXTime(this.props.clock, circle_x),
@@ -155,5 +179,12 @@ export default class Thrust extends PureComponent {
 const styles = StyleSheet.create({
   circle: {
     zIndex: 999,
+  },
+  rotation: {
+    transform: [
+      {
+        rotateZ: '-' + ANGLE_OF_THRUST + 'deg',
+      },
+    ],
   },
 });
