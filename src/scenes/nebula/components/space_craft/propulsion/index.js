@@ -1,12 +1,19 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, View } from 'react-native';
+
 import ThrustVector from './thrust_vector';
-import { NUMBER_OF_THRUST_LINES, THRUST_LINE, random } from '../../Utils';
+import AnimationContext from '../../../context';
+import { NUMBER_OF_THRUST_LINES, THRUST_LINE, random } from '../../../Utils';
 
-export default class Thrust extends PureComponent {
+export default class Propulsion extends PureComponent {
 
-  renderThrustVectors = () => {
+  static contextType = AnimationContext
+
+  render_thrust_vectors = () => {
+    let { coordinates: { x0, y0 }, ship_size, animated_x, animated_y, clock } = this.context;
     const thrust_lines = [];
+    x0 = x0 - ship_size / 3;
+    y0 = y0 + 10;
 
     for (let i = 0; i < NUMBER_OF_THRUST_LINES; i++) {
       const initialHeight = random(THRUST_LINE.height[0], THRUST_LINE.height[1], false);
@@ -21,11 +28,11 @@ export default class Thrust extends PureComponent {
 
     let all_vectors_height = 0;
 
-    for (let i; i < thrust_lines.length; i++) {
+    for (let i = 0; i < thrust_lines.length; i++) {
       all_vectors_height += thrust_lines[i].initialHeight;
     }
 
-    const initial_y = this.props.y - (all_vectors_height / 2);
+    const initial_y = y0 - (all_vectors_height / 2);
 
     return thrust_lines.map(
       (tl, index) => {
@@ -35,11 +42,11 @@ export default class Thrust extends PureComponent {
           if (i < index) {y += thrust_lines[i].initialHeight;}
         }
 
-        return <ThrustVector clock={this.props.clock}
+        return <ThrustVector clock={clock}
                              initialHeight={tl.initialHeight}
                              initialLength={tl.initialLength}
                              initialRadius={tl.initialRadius}
-                             x={this.props.x}
+                             x={x0}
                              y={y}
         />;
       }
@@ -47,12 +54,10 @@ export default class Thrust extends PureComponent {
   }
 
   render () {
-    const thrustVectors = this.renderThrustVectors();
-
     return (
       <View style={[
         styles.container]}>
-        {thrustVectors}
+        {this.render_thrust_vectors()}
       </View>
     );
   }

@@ -1,9 +1,10 @@
+export Animator from './animator';
 export const ANGLE_OF_THRUST = 15;
 export const NUMBER_OF_THRUST_LINES = 4;
 export const THRUST_LINE = {
   height: [2, 3],
-  length: [30, 48],
-  radius: [16, 24],
+  length: [30, 38],
+  radius: [14, 20],
   colors: {
     '0': ['#9FFFE0', false],
     '1': ['#FF5983', false],

@@ -1,12 +1,15 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, { Easing } from 'react-native-reanimated';
-import { random, THRUST_LINE, ANGLE_OF_THRUST } from '../../../Utils';
+import { random, THRUST_LINE, ANGLE_OF_THRUST } from '../../../../Utils';
+import AnimationContext from '../../../../context';
 
 const { cond, timing, set, block, Value, eq } = Animated;
 
-export default class Thrust extends PureComponent {
-  duration = random(100, 140)
+export default class ThrustVector extends PureComponent {
+  static contextType = AnimationContext
+
+  duration = random(50, 80)
 
   extractColor = () => {
     let circle_color = '';
@@ -169,9 +172,20 @@ export default class Thrust extends PureComponent {
       borderRadius: this.runThrustCircleRadiusTimer(this.props.clock),
     };
 
+    const animatedStyleCircleII = {
+      backgroundColor: this.extractColor(),
+      position: 'absolute',
+      top: circle_y,
+      left: this.runThrustLineXTime(this.props.clock, circle_x + random(8, 14)),
+      height: this.runThrustCircleRadiusTimer(this.props.clock),
+      width: this.runThrustCircleRadiusTimer(this.props.clock),
+      borderRadius: this.runThrustCircleRadiusTimer(this.props.clock),
+    };
+
     return <View>
       <Animated.View style={[animatedStyleThrustLine]}/>
       <Animated.View style={[animatedStyleCircle, styles.circle]}/>
+      <Animated.View style={[animatedStyleCircleII, styles.circle]}/>
     </View>;
   }
 }

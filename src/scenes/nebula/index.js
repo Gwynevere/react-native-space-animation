@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, View } from 'react-native';
+import Animated from 'react-native-reanimated';
+
 import Cluster from './components/stars_cluster';
 import SpaceCraft from './components/space_craft';
-import Animated from 'react-native-reanimated';
 
 const { Clock } = Animated;
 
@@ -14,7 +15,7 @@ export default class Nebula extends PureComponent {
     return (
       <View style={styles.container}>
         <Cluster clock={this.clock}/>
-        <SpaceCraft clock={this.clock}/>
+       {/* <SpaceCraft clock={this.clock}/>*/}
       </View>
     );
   }

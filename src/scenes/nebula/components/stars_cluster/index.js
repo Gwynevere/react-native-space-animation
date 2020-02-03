@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import Animated, { Easing } from 'react-native-reanimated';
 import { ANGLE_OF_THRUST, random } from '../../Utils';
-import Star from '../star';
+import Star from './star';
 
 const { Clock, startClock, block, Value, cond, eq, stopClock, timing } = Animated;
 const { width, height } = Dimensions.get('window');
@@ -70,7 +70,7 @@ export default class Nebula extends PureComponent {
     return starsCoordinates;
   }
 
-  init = async => {
+  init = async () => {
     this.setState({
       stars: this.cluster().map(
         (coordinate, index) => (

@@ -1,32 +1,52 @@
 import React, { PureComponent } from 'react';
 import { Dimensions, Image, StyleSheet, View } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { scale } from 'react-native-size-matters';
-import Images from '../../../../../res/images';
-import Thrust from '../thrust';
+
+import Propulsion from './propulsion';
+import MainBody from './main_body';
+import { random } from '../../Utils';
+import Animator from '../../Utils/animator';
+import { AnimationProvider } from '../../context';
 
 const { width, height } = Dimensions.get('window');
-const image_size = 72;
-const { cond, call, timing, Clock, Extrapolate, set, block, stopClock, Value, interpolate, eq, or, startClock, clockRunning, debug } = Animated;
+const ship_size = 72;
 
 export default class SpaceCraft extends PureComponent {
 
   coordinates = {
-    y: height / 2 - image_size / 2,
-    x: width / 2 - image_size / 2,
+    y0: height / 2,
+    x0: width / 2,
+  }
+
+  animator_x = new Animator().init({
+      min_value: this.coordinates.x0 - 10,
+      max_value: this.coordinates.x0 + 10,
+      clock: this.props.clock,
+    },
+    random(400, 800)
+  )
+  animator_y = new Animator().init({
+      min_value: this.coordinates.y0 - 20,
+      max_value: this.coordinates.y0 + 20,
+      clock: this.props.clock,
+    },
+    random(400, 800)
+  )
+
+  ctx = {
+    clock: this.props.clock,
+    coordinates: this.coordinates,
+    ship_size,
+    animated_x: (exec_stack) => this.animator_x.extend_animation(exec_stack),
+    animated_y: (exec_stack) => this.animator_y.extend_animation(exec_stack),
   }
 
   render () {
-    const position = {
-      top: this.coordinates.y,
-      left: this.coordinates.x,
-    };
-
     return <View style={styles.main}>
-      <Image source={Images.spaceCraft} style={[styles.ship, position]}/>
-      <Thrust clock={this.props.clock}
-              x={this.coordinates.x + 14}
-              y={this.coordinates.y - (image_size / 2) - (image_size / 4.4)}/>
+      <AnimationProvider value={this.ctx}>
+        <MainBody/>
+        <Propulsion/>
+      </AnimationProvider>
     </View>;
   }
 }
@@ -34,10 +54,5 @@ export default class SpaceCraft extends PureComponent {
 const styles = StyleSheet.create({
   main: {
     position: 'absolute',
-  },
-  ship: {
-    width: scale(image_size),
-    resizeMode: 'contain',
-    zIndex: 999,
   },
 });

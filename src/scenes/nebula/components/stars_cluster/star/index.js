@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import { StyleSheet } from 'react-native';
 import Animated, { Easing } from 'react-native-reanimated';
-import { random } from '../../Utils';
+import { random } from '../../../Utils';
 
 const { cond, call, timing, Clock, Extrapolate, set, block, stopClock, Value, interpolate, eq, or, startClock, clockRunning, debug } = Animated;
 
